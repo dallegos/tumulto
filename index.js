@@ -28,6 +28,7 @@ class Scene {
     },
     topOffset: 200,
     debug: 0,
+    pause: false,
   };
 
   world = {
@@ -62,8 +63,8 @@ class Scene {
   };
 
   resize = async () => {
-    this.world.width = this.CANVAS.clientWidth * devicePixelRatio;
-    this.world.height = this.CANVAS.clientHeight * devicePixelRatio;
+    this.world.width = this.CANVAS.clientWidth;
+    this.world.height = this.CANVAS.clientHeight;
 
     this.CTX.scale(devicePixelRatio, devicePixelRatio);
 
@@ -76,18 +77,20 @@ class Scene {
   };
 
   update = () => {
-    this.CTX.save();
-    this.CTX.setTransform(1, 0, 0, 1, 0, 0);
-    this.CTX.clearRect(
-      0,
-      0,
-      this.world.width * devicePixelRatio,
-      this.world.height * devicePixelRatio
-    );
-    this.CTX.restore();
+    if (!this.config.pause) {
+      this.CTX.save();
+      this.CTX.setTransform(1, 0, 0, 1, 0, 0);
+      this.CTX.clearRect(
+        0,
+        0,
+        this.world.width * devicePixelRatio,
+        this.world.height * devicePixelRatio
+      );
+      this.CTX.restore();
 
-    if (this.tumulto) {
-      this.tumulto.update();
+      if (this.tumulto) {
+        this.tumulto.update();
+      }
     }
 
     requestAnimationFrame(this.update);
@@ -628,7 +631,9 @@ class Utils {
   };
 
   static getRandomNumber = (min, max) => {
-    return Number.parseFloat((min + Math.random() * (max - min)).toFixed(2));
+    return Number.parseInt(
+      Math.floor((min + Math.random() * (max - min)).toFixed(2))
+    );
   };
 
   static loadImage = async (imgSrc) => {
@@ -665,11 +670,13 @@ class Utils {
 }
 
 class Controlls {
-  slider = null;
   scene = null;
+  totalAmountDiv = null;
 
   constructor(scene) {
     this.scene = scene;
+
+    this.totalAmountDiv = document.getElementById("total-amount");
 
     document.querySelectorAll('[id^="config-"]').forEach((e) => {
       let [, key, subKey] = e.id.split("-");
@@ -679,22 +686,38 @@ class Controlls {
         e.value = this.scene.config[key];
       }
 
+      this.totalAmountDiv.innerHTML = e.value;
+
       e.addEventListener("input", this.#changeValue);
     });
 
     document.querySelectorAll('[id^="select-set-"]').forEach((e) => {
       e.addEventListener("click", this.#changeSet);
     });
+
+    const debugButton = document.getElementById("toggleDebug");
+    debugButton.addEventListener("click", () => {
+      this.scene.config.debug = !this.scene.config.debug;
+    });
+
+    const pauseButton = document.getElementById("togglePause");
+    pauseButton.addEventListener("click", (e) => {
+      this.scene.config.pause = !this.scene.config.pause;
+      e.target.innerHTML = this.scene.config.pause ? "RESUME" : "PAUSE";
+    });
   }
 
   #changeValue = (e) => {
     let [, key, subKey] = e.target.id.split("-");
 
+    const value = Number.parseFloat(e.target.value);
     if (subKey) {
-      this.scene.config[key][subKey] = Number.parseFloat(e.target.value);
+      this.scene.config[key][subKey] = value;
     } else {
-      this.scene.config[key] = Number.parseFloat(e.target.value);
+      this.scene.config[key] = value;
     }
+
+    this.totalAmountDiv.innerHTML = value;
 
     this.scene.tumulto.generatePeople();
     this.scene.resize();
@@ -742,7 +765,6 @@ let config1 = {
     max: 15,
   },
   topOffset: 150,
-  //debug: 1,
 };
 
 let config2 = {
@@ -755,7 +777,7 @@ let config2 = {
     max: 8,
   },
   yVelocity: {
-    min: 0.5,
+    min: 1,
     max: 2,
   },
   maxOffsetY: {
@@ -763,7 +785,6 @@ let config2 = {
     max: 25,
   },
   topOffset: 150,
-  //debug: 1,
 };
 
 const scene = new Scene(config1);

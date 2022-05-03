@@ -4,12 +4,21 @@ body {
 }
 
 * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   font-family: "VT323", monospace;
 }
 
 body {
   margin: 0;
+  background-image: -o-radial-gradient(
+    6.8% 8.3%,
+    circle 400px,
+    rgba(255, 244, 169, 1) 0%,
+    rgba(255, 244, 234, 1) 100.2%
+  );
   background-image: radial-gradient(
     circle 400px at 6.8% 8.3%,
     rgba(255, 244, 169, 1) 0%,
@@ -53,70 +62,149 @@ fieldset {
   height: 100vh;
   background-color: transparent;
   z-index: 99;
+  -webkit-transition: background-color 600ms ease-in-out,
+    opacity 600ms ease-in-out;
+  -o-transition: background-color 600ms ease-in-out, opacity 600ms ease-in-out;
   transition: background-color 600ms ease-in-out, opacity 600ms ease-in-out;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
 #loader.active {
   opacity: 1;
   background-color: #faaca8;
+  background-image: -o-linear-gradient(71deg, #faaca8 0%, #ddd6f3 100%);
   background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
 }
 
 #loader b {
   display: inline-block;
+  -webkit-transform: skewY(10deg);
+  -ms-transform: skewY(10deg);
   transform: skewY(10deg);
+  -webkit-transition: -webkit-transform 2s ease-in-out;
+  transition: -webkit-transform 2s ease-in-out;
+  -o-transition: transform 2s ease-in-out;
   transition: transform 2s ease-in-out;
+  transition: transform 2s ease-in-out, -webkit-transform 2s ease-in-out;
   letter-spacing: 0.5rem;
   font-size: 1.7rem;
+  -webkit-animation: bounce 1800ms infinite ease-in-out;
   animation: bounce 1800ms infinite ease-in-out;
   color: white;
   text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
 }
 
 #loader b:nth-child(1) {
+  -webkit-animation-delay: 50ms;
   animation-delay: 50ms;
 }
 
 #loader b:nth-child(2) {
+  -webkit-animation-delay: 100ms;
   animation-delay: 100ms;
 }
 
 #loader b:nth-child(3) {
+  -webkit-animation-delay: 150ms;
   animation-delay: 150ms;
 }
 
 #loader b:nth-child(4) {
+  -webkit-animation-delay: 200ms;
   animation-delay: 200ms;
 }
 
 #loader b:nth-child(5) {
+  -webkit-animation-delay: 250ms;
   animation-delay: 250ms;
 }
 
 #loader b:nth-child(6) {
+  -webkit-animation-delay: 300ms;
   animation-delay: 300ms;
 }
 
 #loader b:nth-child(7) {
+  -webkit-animation-delay: 350ms;
   animation-delay: 350ms;
 }
 
 #loader b:nth-child(8) {
+  -webkit-animation-delay: 400ms;
   animation-delay: 400ms;
 }
 
 #loader b:nth-child(9) {
+  -webkit-animation-delay: 450ms;
   animation-delay: 450ms;
 }
 
 #loader b:nth-child(10) {
+  -webkit-animation-delay: 500ms;
   animation-delay: 500ms;
+}
+
+@-webkit-keyframes bounce {
+  50% {
+    -webkit-transform: translate(0px, -30px) skewY(-10deg);
+    transform: translate(0px, -30px) skewY(-10deg);
+  }
 }
 
 @keyframes bounce {
   50% {
+    -webkit-transform: translate(0px, -30px) skewY(-10deg);
     transform: translate(0px, -30px) skewY(-10deg);
   }
+}
+
+#controls {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 7px;
+  padding: 30px;
+  top: 10px;
+  left: 10px;
+}
+
+#controls fieldset {
+  border-color: white;
+}
+
+#controls fieldset:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+#controls fieldset legend {
+  color: white;
+}
+
+#controls fieldset input {
+  display: block;
+}
+
+#controls #total-amount {
+  text-align: center;
+  color: white;
+  display: block;
 }

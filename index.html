@@ -21,7 +21,17 @@
     <canvas id="peopleCanvas"></canvas>
     <canvas id="ambientCanvas"></canvas>
     <div id="controls">
-      <input type="range" min="1" max="100" class="slider" id="config-amount" />
+      <fieldset>
+        <legend>Amount</legend>
+        <input
+          type="range"
+          min="1"
+          max="100"
+          class="slider"
+          id="config-amount"
+        />
+        <small id="total-amount"></small>
+      </fieldset>
 
       <fieldset>
         <legend>X Velocity</legend>
@@ -46,8 +56,11 @@
         <input type="number" step="1" id="config-topOffset" />
       </fieldset>
 
-      <button id="select-set-1">Set 1</button>
-      <button id="select-set-2">Set 2</button>
+      <button id="toggleDebug">DEBUG</button>
+      <button id="togglePause">PAUSE</button>
+
+      <!-- <button id="select-set-1">Set 1</button>
+      <button id="select-set-2">Set 2</button> -->
     </div>
 
     <div id="loader">
