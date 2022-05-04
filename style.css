@@ -13,7 +13,7 @@ body {
 
 body {
   margin: 0;
-  background-image: -o-radial-gradient(
+  /* background-image: -o-radial-gradient(
     6.8% 8.3%,
     circle 400px,
     rgba(255, 244, 169, 1) 0%,
@@ -23,7 +23,12 @@ body {
     circle 400px at 6.8% 8.3%,
     rgba(255, 244, 169, 1) 0%,
     rgba(255, 244, 234, 1) 100.2%
-  );
+  ); */
+  background-color: #6699cc;
+
+  -webkit-transition: background-color 1500ms ease-in-out;
+  -o-transition: background-color 1500ms ease-in-out;
+  transition: background-color 1500ms ease-in-out;
 }
 
 canvas {
@@ -207,4 +212,8 @@ fieldset {
   text-align: center;
   color: white;
   display: block;
+}
+
+#controls button {
+  margin: 3px;
 }
