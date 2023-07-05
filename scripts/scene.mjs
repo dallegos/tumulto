@@ -60,7 +60,7 @@ export class Scene {
             this.tumulto.resize();
         }
 
-        if (callback) callback();
+        if (typeof callback === "function") callback();
     };
 
     update = () => {
